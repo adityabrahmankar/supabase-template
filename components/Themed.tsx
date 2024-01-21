@@ -47,7 +47,7 @@ export function View(props: ViewProps) {
 
 export function PrimaryButton(props: PrimaryButtonProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: '#264653', dark: '#264653' }, 'background')
+  const backgroundColor = useThemeColor({ light: '#aa7661', dark: '#aa7661' }, 'background')
 
   return (
     <Pressable style={[

@@ -1,18 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import { useLocalSearchParams } from 'expo-router';
+import { useSupabase } from '@/hooks/useSupabase';
 
-export default function SignupScreen() {
+export default function TabOneScreen() {
+  const session = useSupabase()
+  console.log('[SESSION]', session)
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Signup</Text>
+      <Text style={styles.title}>Tab One</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/signup.tsx" />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+      <EditScreenInfo path="app/(tabs)/index" />
     </View>
   );
 }

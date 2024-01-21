@@ -34,6 +34,8 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
     const segments = useSegments()[0];
     const router = useRouter();
 
+    console.log(segments)
+
     const signUp = async (email: string, password: string) => {
         const { error } = await supabase.auth.signUp({
             email,
@@ -74,14 +76,14 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
     }, []);
 
     useEffect(() => {
-        if (!initialized) return;
+		if (!initialized) return;
 
-        if (!session && segments !== "(auth)") {
-            router.replace("/(auth)/login");
-        } else if (session && segments !== "(auth)") {
-            router.replace("/(tabs)/");
-        }
-    }, [initialized, session, segments]);
+		if (!session && segments !== "(auth)") {
+			router.replace("/(auth)");
+		} else if (session && segments !== "(app)") {
+			router.replace("/");
+		}
+	}, [initialized, session, segments]);
 
     return (
         <SupabaseContext.Provider
