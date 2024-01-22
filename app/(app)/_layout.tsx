@@ -7,12 +7,14 @@ import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useSupabase } from '@/hooks/useSupabase';
+import { Text, View } from '@/components/Themed';
+import Header from '@/components/Header';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={20} style={{ marginBottom: -3, }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -23,32 +25,51 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: useClientOnlyValue(false, true),
+        // headerShown: useClientOnlyValue(false, true),
+        tabBarLabelStyle: { fontSize: 14, fontFamily: 'Geist-SemiBold', paddingBottom: 8 },
+        headerTitleAlign: 'center',
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'perplexity',
+          headerTitle: () => <Text style={{ fontSize: 24, fontFamily: 'Geist-SemiBold' }}>perplexity</Text>,
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
+          tabBarLabel: 'Home',
           headerRight: () => (
-              <Pressable onPress={signOut}>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="sign-out"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
+            <Pressable onPress={signOut}>
+              {({ pressed }) => (
+                <FontAwesome
+                  name="sign-out"
+                  size={25}
+                  color={Colors[colorScheme ?? 'light'].text}
+                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                />
+              )}
+            </Pressable>
           ),
+          headerLeft: () => (
+            <FontAwesome
+              name='user'
+              size={25}
+              color={Colors[colorScheme ?? 'light'].text}
+              style={{ marginLeft: 15 }}
+            />
+          )
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Account',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Explore',
+          tabBarIcon: ({ color }) => <TabBarIcon name="compass" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="three"
+        options={{
+          title: 'Library',
+          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
     </Tabs>

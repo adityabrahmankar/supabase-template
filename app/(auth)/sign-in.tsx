@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
-import { StyleSheet, TextInput } from "react-native";
+import { Alert, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as z from "zod";
+import { useColorScheme } from '@/components/useColorScheme';
 
 import { PrimaryButton, Text, View } from "@/components/Themed";
 import { useSupabase } from "@/hooks/useSupabase";
@@ -19,6 +20,32 @@ const FormSchema = z.object({
 export default function SignIn() {
 	const { signInWithPassword } = useSupabase();
 	const router = useRouter();
+	const colorScheme = useColorScheme();
+
+	const styles = StyleSheet.create({
+		formConatiner: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: 16,
+			justifyContent: 'space-between',
+			height: 'auto'
+		},
+		inputContainer: {
+			padding: 12,
+			display: 'flex',
+			gap: 32,
+		},
+		label: {
+			marginVertical: 8
+		},
+		input: {
+			padding:12,
+			borderWidth: 1,
+			borderColor: '#fff',
+			borderRadius: 4,
+			color: colorScheme === 'dark' ? '#fff' : undefined,
+		}
+	})
 
 	const {
 		control,
@@ -34,6 +61,7 @@ export default function SignIn() {
 			await signInWithPassword(data.email, data.password);
 		} catch (error: Error | any) {
 			console.log(error.message);
+			Alert.alert('Error Signing In', error.message)
 		}
 	}
 
@@ -129,27 +157,4 @@ export default function SignIn() {
 	);
 }
 
-const styles = StyleSheet.create({
-	formConatiner: {
-		display: 'flex',
-		flexDirection: 'column',
-		gap: 16,
-		justifyContent: 'space-between',
-		height: 'auto'
-	},
-	inputContainer: {
-		padding: 12,
-		display: 'flex',
-		gap: 32,
-	},
-	label: {
-		marginVertical: 8
-	},
-	input: {
-		padding:12,
-		borderWidth: 1,
-		borderColor: '#fff',
-		borderRadius: 4,
-		color: '#fff'
-	}
-})
+

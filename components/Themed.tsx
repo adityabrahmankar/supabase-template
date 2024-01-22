@@ -3,7 +3,7 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import { Text as DefaultText, View as DefaultView, PressableProps as DefaultPressable, Pressable } from 'react-native';
+import { Text as DefaultText, View as DefaultView, PressableProps as DefaultPressable, Pressable, TouchableOpacity } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from './useColorScheme';

@@ -6,7 +6,7 @@ import * as z from "zod";
 
 import { useSupabase } from "@/hooks/useSupabase";
 import { View, Text, PrimaryButton } from "@/components/Themed";
-import { TextInput, StyleSheet } from "react-native";
+import { TextInput, StyleSheet, Alert } from "react-native";
 
 const FormSchema = z
 	.object({
@@ -53,6 +53,7 @@ export default function SignUp() {
 			await signUp(data.email, data.password);
 		} catch (error: Error | any) {
 			console.log(error.message);
+			Alert.alert('Error Signing Up', error.message)
 		}
 	}
 
@@ -198,6 +199,6 @@ const styles = StyleSheet.create({
 		padding: 12,
 		borderWidth: 1,
 		borderRadius: 4,
-		color: '#fff'
+		// color: '#fff'
 	},
 })
