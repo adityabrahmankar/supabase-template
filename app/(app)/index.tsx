@@ -1,11 +1,34 @@
 import { StyleSheet, TextInput, useColorScheme } from 'react-native';
+import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet'
 
 import { Text, View } from '@/components/Themed';
 import { useSupabase } from '@/hooks/useSupabase';
+import { useRef, useState } from 'react';
 
 export default function TabOneScreen() {
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
   const session = useSupabase()
   const colorScheme = useColorScheme()
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null)
+  function closeModal() {
+    bottomSheetModalRef.current?.dismiss()
+    setModalVisible(false)
+  }
+
+  function handlePresentModalPress() {
+    if (modalVisible) {
+      closeModal()
+    } else {
+      bottomSheetModalRef.current?.present()
+      setModalVisible(true)
+    }
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -48,6 +71,13 @@ export default function TabOneScreen() {
           placeholder='Ask anything...'
           placeholderTextColor={colorScheme === 'dark' ? '#fff7f7' : undefined}
         />
+          <BottomSheetModalProvider>
+            <BottomSheetModal
+            onDismiss={() => setModalVisible(false)}
+            >
+              <Text>Hello</Text>
+            </BottomSheetModal>
+          </BottomSheetModalProvider>
       </View>
     </View>
   );
