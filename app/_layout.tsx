@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useColorScheme } from '@/components/useColorScheme';
 import { SupabaseProvider } from '@/context/supabaseProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export {
   ErrorBoundary,
@@ -57,17 +58,19 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <SupabaseProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <SafeAreaProvider>
-          <Stack screenOptions={{
-            headerShown: false
-          }}>
-            <Stack.Screen name="(auth)" />
-            <Stack.Screen name="(app)" />
-          </Stack>
-        </SafeAreaProvider>
-      </ThemeProvider>
-    </SupabaseProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SupabaseProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <SafeAreaProvider>
+            <Stack screenOptions={{
+              headerShown: false
+            }}>
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(app)" />
+            </Stack>
+          </SafeAreaProvider>
+        </ThemeProvider>
+      </SupabaseProvider>
+    </GestureHandlerRootView>
   );
 }

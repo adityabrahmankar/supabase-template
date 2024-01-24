@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, useColorScheme } from 'react-native';
+import { Button, Pressable, StyleSheet, TextInput, useColorScheme } from 'react-native';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -6,14 +6,15 @@ import {
   BottomSheetView,
 } from '@gorhom/bottom-sheet'
 
-import { Text, View } from '@/components/Themed';
+import { PrimaryButton, Text, View } from '@/components/Themed';
 import { useSupabase } from '@/hooks/useSupabase';
 import { useRef, useState } from 'react';
 
 export default function TabOneScreen() {
+  const colorScheme = useColorScheme()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const session = useSupabase()
-  const colorScheme = useColorScheme()
+  console.log(modalVisible)
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
   function closeModal() {
@@ -55,7 +56,7 @@ export default function TabOneScreen() {
       flexDirection: 'row',
       display: 'flex',
       borderRadius: 100,
-      padding: 12,
+      padding: 16,
       position: 'absolute',
       bottom: 20
     }
@@ -64,21 +65,25 @@ export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Where knowledge begins</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <View style={styles.searchBox}>
-        <TextInput
-          style={{ color: '#fff', width: '90%', justifyContent: 'center' }}
-          placeholder='Ask anything...'
-          placeholderTextColor={colorScheme === 'dark' ? '#fff7f7' : undefined}
-        />
-          <BottomSheetModalProvider>
-            <BottomSheetModal
-            onDismiss={() => setModalVisible(false)}
-            >
-              <Text>Hello</Text>
-            </BottomSheetModal>
-          </BottomSheetModalProvider>
-      </View>
+      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+      <Pressable onPress={handlePresentModalPress} style={styles.searchBox} >
+        <Text>Ask anything...</Text>
+      </Pressable>
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          onDismiss={() => setModalVisible(false)}
+          ref={bottomSheetModalRef}
+          enableDynamicSizing={true}
+          backdropComponent={(props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} />}
+          enableDismissOnClose
+          enablePanDownToClose
+          backgroundStyle={{ backgroundColor: 'red', flex: 1 }}
+        >
+          <BottomSheetView>
+            <Text>Hello</Text>
+          </BottomSheetView>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
     </View>
   );
 }
