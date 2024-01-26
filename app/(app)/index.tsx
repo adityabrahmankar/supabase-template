@@ -1,4 +1,4 @@
-import { Button, Pressable, StyleSheet, TextInput, useColorScheme } from 'react-native';
+import { Button, KeyboardAvoidingView, Pressable, StyleSheet, TextInput, useColorScheme } from 'react-native';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -80,7 +80,12 @@ export default function TabOneScreen() {
           backgroundStyle={{ backgroundColor: 'red', flex: 1 }}
         >
           <BottomSheetView>
-            <Text>Hello</Text>
+            <KeyboardAvoidingView>
+              <Text>Hello</Text>
+              <TextInput
+                placeholder='Ask anything...'
+              />
+            </KeyboardAvoidingView>
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
